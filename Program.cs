@@ -1,7 +1,14 @@
+using Microsoft.EntityFrameworkCore;
+using SportCentrum.Context;
+using System;
+using System.Linq;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<SportCentrumContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("Connection")));
 
 var app = builder.Build();
 
@@ -23,5 +30,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
 app.Run();

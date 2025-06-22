@@ -7,7 +7,7 @@ namespace SportCentrum.Context
 {
     public class SportCentrumContext : DbContext
     {
-        public SportCentrumContext() { }
+        public SportCentrumContext(DbContextOptions<SportCentrumContext> options) :base(options) { }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Coach> Coaches { get; set; }
