@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Sport_centrum.Models
+namespace SportCentrum.Models
 {
     public class Training
     {
@@ -9,5 +9,6 @@ namespace Sport_centrum.Models
         public string Name { get; set; }
         public TimeSpan Duration { get; set; }
         public virtual ICollection<TrainingSession> Sessions { get; set; }
+        public virtual ICollection<UserTraining> UserTrainings { get; set; }
     }
 }

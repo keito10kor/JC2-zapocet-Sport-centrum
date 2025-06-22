@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Sport_centrum.Models
+namespace SportCentrum.Models
 {
     public class TrainingReservation
     {

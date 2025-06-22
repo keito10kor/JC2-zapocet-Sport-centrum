@@ -1,4 +1,4 @@
-namespace Sport_centrum.Models
+namespace SportCentrum.Models
 {
     public class ErrorViewModel
     {

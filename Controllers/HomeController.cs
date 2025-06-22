@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Sport_centrum.Models;
+using SportCentrum.Models;
 
-namespace Sport_centrum.Controllers
+namespace SportCentrum.Controllers
 {
     public class HomeController : Controller
     {

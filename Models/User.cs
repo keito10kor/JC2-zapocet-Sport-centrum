@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Sport_centrum.Models
+namespace SportCentrum.Models
 {
     public class User
     {
@@ -11,6 +11,7 @@ namespace Sport_centrum.Models
         public string Email { get; set; }
         public string Gender { get; set; }
         public virtual ICollection<TrainingReservation> Reservations { get; set; }
+        public virtual ICollection<UserTraining> UserTrainings { get; set; }
 
     }
 }
