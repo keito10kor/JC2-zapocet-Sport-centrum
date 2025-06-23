@@ -17,6 +17,8 @@ namespace SportCentrum.Models
         public int? CoachId { get; set; }
         public virtual Coach? Coach { get; set; }
         public TrainingType TrainingType { get; set; }
+        public string? DayOfWeek { get; set; }
+        public string? DaysOfWeek { get; set; }
         public DateTime Start {  get; set; }
         public DateTime End { get; set; }
         public int Capacity { get; set; }
