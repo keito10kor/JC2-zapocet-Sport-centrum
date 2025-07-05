@@ -60,7 +60,13 @@ namespace Sport_centrum.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("text");
 
-                    b.Property<TimeSpan>("Duration")
+                    b.Property<TimeSpan?>("Duration")
+                        .HasColumnType("interval");
+
+                    b.Property<TimeSpan?>("DurationWithCoach")
+                        .HasColumnType("interval");
+
+                    b.Property<TimeSpan?>("DurationWithoutCoach")
                         .HasColumnType("interval");
 
                     b.Property<string>("Name")
@@ -110,8 +116,15 @@ namespace Sport_centrum.Migrations
                     b.Property<int?>("CoachId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("DayOfWeek")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("End")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsGroup")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("Start")
                         .HasColumnType("timestamp with time zone");
@@ -119,9 +132,6 @@ namespace Sport_centrum.Migrations
                     b.Property<string>("TrainingId")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("TrainingType")
-                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 

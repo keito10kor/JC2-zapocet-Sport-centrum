@@ -29,6 +29,5 @@ namespace SportCentrum.Context
             modelBuilder.Entity<TrainingReservation>().HasOne(tr => tr.TrainingSession).WithMany(ts => ts.Reservations).HasForeignKey(tr => tr.TrainingSessionId);
 
         }
-
     }
 }

@@ -323,7 +323,7 @@
 					<CoachId>522062</CoachId>
 					<TrainingId>TEN</TrainingId>
 					<TrainingType>Group</TrainingType>
-					<DayOfWeek>Moтday</DayOfWeek>
+					<DayOfWeek>Monday</DayOfWeek>
 					<Start>10:00:00</Start>
 					<Capacity>6</Capacity>
 				</Session>

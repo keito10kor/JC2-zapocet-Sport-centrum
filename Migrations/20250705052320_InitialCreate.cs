@@ -35,7 +35,9 @@ namespace Sport_centrum.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Duration = table.Column<TimeSpan>(type: "interval", nullable: false)
+                    Duration = table.Column<TimeSpan>(type: "interval", nullable: true),
+                    DurationWithoutCoach = table.Column<TimeSpan>(type: "interval", nullable: true),
+                    DurationWithCoach = table.Column<TimeSpan>(type: "interval", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,7 +67,8 @@ namespace Sport_centrum.Migrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     TrainingId = table.Column<string>(type: "text", nullable: false),
                     CoachId = table.Column<int>(type: "integer", nullable: true),
-                    TrainingType = table.Column<int>(type: "integer", nullable: false),
+                    IsGroup = table.Column<bool>(type: "boolean", nullable: false),
+                    DayOfWeek = table.Column<string>(type: "text", nullable: false),
                     Start = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     End = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Capacity = table.Column<int>(type: "integer", nullable: false)

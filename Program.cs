@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SportCentrum.Configuration;
 using SportCentrum.Context;
 using System;
 using System.Linq;
@@ -11,6 +12,12 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<SportCentrumContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("Connection")));
 
 var app = builder.Build();
+
+using(var scope  = app.Services.CreateScope())
+{
+    var context =scope.ServiceProvider.GetService<SportCentrumContext>();
+    DbSeeder.Seed(context, "Data/data.xml");
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
