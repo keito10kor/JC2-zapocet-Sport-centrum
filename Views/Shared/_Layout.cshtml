@@ -1,5 +1,35 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+    <head class="content">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/Sport_centrum.styles.css" asp-append-version="true" />
+        <title>@ViewData["Title"] - SportCentrum</title>
+    </head>
+    <body class="content d-flex flex-column min-vh-100">
+        <header class="py-2 color-main">
+            <nav class="nav">
+                <a class="nav-link ps-3 fs-4 color-white" asp-controller="Home" asp-action="Index">Home</a>
+                <a class="nav-link ps-3 fs-4 color-white">My Reservations</a>
+            </nav>
+        </header>
+        <main class="flex-grow-1 h-100">
+            @RenderBody()
+        </main>
+        <footer class="mt-auto color-main py-1">
+            <div class="d-flex justify-content-end">
+                <span class="color-white pe-3">&copy; 2025 - SportCentrum</span>
+            </div>
+        </footer>
+    </body>
+</html>
+
+
+
+
+<!--html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,4 +76,4 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
-</html>
+</--html-->
