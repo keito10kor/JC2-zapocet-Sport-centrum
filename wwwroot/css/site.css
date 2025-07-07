@@ -20,6 +20,10 @@ body {
 .object-fit-cover {
     object-fit: cover;
 }
+ 
+.border-color-main {
+    border-color: darkturquoise;
+}
 
 @media (min-width: 768px) {
   html {

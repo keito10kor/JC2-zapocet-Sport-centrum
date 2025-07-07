@@ -1,0 +1,15 @@
+﻿@model List<string>
+@{
+    var type = ViewBag.Type as string;
+    ViewData["Title"] = $"Choose {type} training";
+}
+
+<div class="d-flex flex-column justify-content-center text-center min-vh-100">
+    <h2 class="mb-5 w-100">Choose sport for @type training</h2>
+    <div class="d-flex justify-content-around flex-wrap gap-3 px-5">
+        @foreach(var sport in Model)
+        {
+            <a class="btn btn-lg color-main color-white" asp-controller="Trainings" asp-action="SelectTrainer" asp-route-type=@type asp-route-sport=@sport>@sport</a>
+        }
+    </div>
+</div>
