@@ -15,6 +15,7 @@ namespace SportCentrum.Context
         public DbSet<TrainingSession> Sessions { get; set; }
         public DbSet<TrainingReservation> Reservations { get; set; }
         public DbSet<UserTraining> UserTrainings { get; set; }
+        public DbSet<CoachTraining> CoachTrainings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,6 +28,10 @@ namespace SportCentrum.Context
 
             modelBuilder.Entity<TrainingReservation>().HasOne(tr => tr.User).WithMany(u => u.Reservations).HasForeignKey(tr =>  tr.UserId);
             modelBuilder.Entity<TrainingReservation>().HasOne(tr => tr.TrainingSession).WithMany(ts => ts.Reservations).HasForeignKey(tr => tr.TrainingSessionId);
+
+            modelBuilder.Entity<CoachTraining>().HasKey(ct => new { ct.CoachId, ct.TrainingId });
+            modelBuilder.Entity<CoachTraining>().HasOne(ct => ct.Coach).WithMany(c => c.CoachTrainings).HasForeignKey(ct => ct.CoachId);
+            modelBuilder.Entity<CoachTraining>().HasOne(ct => ct.Training).WithMany(t => t.CoachTrainings).HasForeignKey(ct => ct.TrainingId);
 
         }
     }

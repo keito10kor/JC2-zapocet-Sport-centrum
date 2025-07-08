@@ -1,11 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "Choose Training Type";
+    ViewData["Title"] = "Choose a training type";
 }
 
-<div class="d-flex flex-column justify-content-center text-center min-vh-100">
-    <h2 class="mb-5 w-100">Choose training type</h2>
-    <div class="d-flex justify-content-around w-100">
-        <a class="btn btn-lg color-main color-white" asp-controller="Trainings" asp-action="SelectSport" asp-route-type="individual">Individual</a>
-        <a class="btn btn-lg color-main color-white" asp-controller="Trainings" asp-action="SelectSport" asp-route-type="group">Group</a>
-    </div>
+<div class="d-flex flex-column justify-content-center align-items-center gap-3 min-vh-100">
+    <a class="btn btn-lg color-main color-white w-50" asp-controller="Trainings" asp-action="SelectSport" asp-route-type="individual">Individual trainings</a>
+    <a class="btn btn-lg color-main color-white w-50" asp-controller="Trainings" asp-action="SelectSport" asp-route-type="group">Group trainings</a>
 </div>

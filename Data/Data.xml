@@ -103,7 +103,7 @@
 		<Coach>
 			<Id>511122</Id>
 			<Name>Veronika</Name>
-			<Surname>Kubelková</Surname>
+			<Surname>Kubelkova</Surname>
 			<Email>veronika.kub@gmail.com</Email>
 			<Gender>F</Gender>
 			<Specialty>Fitness</Specialty>
@@ -245,6 +245,108 @@
 			<Specialty>Floorball</Specialty>
 		</Coach>
 	</Coaches>
+	<CoachTrainings>
+		<CoachTraining>
+			<CoachId>511122</CoachId>
+			<TrainingId>GYM</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>511122</CoachId>
+			<TrainingId>AA</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>511122</CoachId>
+			<TrainingId>PIL</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>562025</CoachId>
+			<TrainingId>GYM</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>562025</CoachId>
+			<TrainingId>YOG</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>562025</CoachId>
+			<TrainingId>AA</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>512622</CoachId>
+			<TrainingId>GYM</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>512622</CoachId>
+			<TrainingId>YOG</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>544062</CoachId>
+			<TrainingId>GYM</TrainingId>
+		</CoachTraining>
+		<CoachTrainig>
+			<CoachId>544062</CoachId>
+			<TrainingId>AA</TrainingId>
+		</CoachTrainig>
+		<CoachTraining>
+			<CoachId>502521</CoachId>
+			<TrainingId>GYM</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>502521</CoachId>
+			<TrainingId>PIL</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>512206</CoachId>
+			<TrainingId>SWI</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>547202</CoachId>
+			<TrainingId>SWI</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>552136</CoachId>
+			<TrainingId>TEN</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>522062</CoachId>
+			<TrainingId>TEN</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>565025</CoachId>
+			<TrainingId>TEN</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>521392</CoachId>
+			<TrainingId>VOL</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>520620</CoachId>
+			<TrainingId>VOL</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>525214</CoachId>
+			<TrainingId>BAD</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>562206</CoachId>
+			<TrainingId>BAD</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>520252</CoachId>
+			<TrainingId>BAS</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>514922</CoachId>
+			<TrainingId>BAS</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>506202</CoachId>
+			<TrainingId>FLO</TrainingId>
+		</CoachTraining>
+		<CoachTraining>
+			<CoachId>552153</CoachId>
+			<TrainingId>FLO</TrainingId>
+		</CoachTraining>
+	</CoachTrainings>
 	<TrainingSessions>
 		<Individual>
 			<Session>
@@ -482,7 +584,7 @@
 					<Capacity>15</Capacity>
 				</Session>
 			</YogaSessions>
-			<AquaAerobicsSession>
+			<AquaAerobicsSessions>
 				<Session>
 					<Id>AATU09</Id>
 					<CoachId>544062</CoachId>
@@ -510,7 +612,7 @@
 					<Start>16:30:00</Start>
 					<Capacity>12</Capacity>
 				</Session>
-			</AquaAerobicsSession>
+			</AquaAerobicsSessions>
 			<PilatesSessions>
 				<Session>
 					<Id>PILTU1630</Id>

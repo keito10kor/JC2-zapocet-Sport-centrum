@@ -23,6 +23,7 @@ namespace SportCentrum.DtoModels
         public required CoachesDto Coaches { get; set; }
         public required TrainingsDto Trainings { get; set; }
         public required AllSessionsDto TrainingSessions { get; set; }
+        public required CoachTrainingsDto CoachTrainings { get; set; }
     }
 
     public class UsersDto
@@ -98,6 +99,12 @@ namespace SportCentrum.DtoModels
         public required List<GroupSessionDto> PilatesSessions { get; set; }
     }
 
+    public class CoachTrainingsDto
+    {
+        [XmlElement("CoachTraining")]
+        public required List<CoachTrainingDto> CoachTrainings { get; set; }
+    }
+
     public class UserDto
     {
         public int Id { get; set; }
@@ -154,5 +161,11 @@ namespace SportCentrum.DtoModels
         public bool IsGroup { get; set; } = true;
         public IEnumerable<string> Days => new List<string> { DayOfWeek };
 
+    }
+
+    public class CoachTrainingDto
+    {
+        public int CoachId { get; set; }
+        public string TrainingId { get; set; }
     }
 }

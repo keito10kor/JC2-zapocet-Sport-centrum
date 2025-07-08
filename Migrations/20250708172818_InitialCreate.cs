@@ -61,6 +61,30 @@ namespace Sport_centrum.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CoachTrainings",
+                columns: table => new
+                {
+                    CoachId = table.Column<int>(type: "integer", nullable: false),
+                    TrainingId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CoachTrainings", x => new { x.CoachId, x.TrainingId });
+                    table.ForeignKey(
+                        name: "FK_CoachTrainings_Coaches_CoachId",
+                        column: x => x.CoachId,
+                        principalTable: "Coaches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CoachTrainings_Trainings_TrainingId",
+                        column: x => x.TrainingId,
+                        principalTable: "Trainings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sessions",
                 columns: table => new
                 {
@@ -141,6 +165,11 @@ namespace Sport_centrum.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CoachTrainings_TrainingId",
+                table: "CoachTrainings",
+                column: "TrainingId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reservations_TrainingSessionId",
                 table: "Reservations",
                 column: "TrainingSessionId");
@@ -169,6 +198,9 @@ namespace Sport_centrum.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CoachTrainings");
+
             migrationBuilder.DropTable(
                 name: "Reservations");
 

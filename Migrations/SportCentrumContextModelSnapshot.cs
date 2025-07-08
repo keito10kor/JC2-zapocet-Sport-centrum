@@ -55,6 +55,21 @@ namespace Sport_centrum.Migrations
                     b.ToTable("Coaches");
                 });
 
+            modelBuilder.Entity("SportCentrum.Models.CoachTraining", b =>
+                {
+                    b.Property<int>("CoachId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("TrainingId")
+                        .HasColumnType("text");
+
+                    b.HasKey("CoachId", "TrainingId");
+
+                    b.HasIndex("TrainingId");
+
+                    b.ToTable("CoachTrainings");
+                });
+
             modelBuilder.Entity("SportCentrum.Models.Training", b =>
                 {
                     b.Property<string>("Id")
@@ -186,6 +201,25 @@ namespace Sport_centrum.Migrations
                     b.ToTable("UserTrainings");
                 });
 
+            modelBuilder.Entity("SportCentrum.Models.CoachTraining", b =>
+                {
+                    b.HasOne("SportCentrum.Models.Coach", "Coach")
+                        .WithMany("CoachTrainings")
+                        .HasForeignKey("CoachId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportCentrum.Models.Training", "Training")
+                        .WithMany("CoachTrainings")
+                        .HasForeignKey("TrainingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Coach");
+
+                    b.Navigation("Training");
+                });
+
             modelBuilder.Entity("SportCentrum.Models.TrainingReservation", b =>
                 {
                     b.HasOne("SportCentrum.Models.TrainingSession", "TrainingSession")
@@ -243,11 +277,15 @@ namespace Sport_centrum.Migrations
 
             modelBuilder.Entity("SportCentrum.Models.Coach", b =>
                 {
+                    b.Navigation("CoachTrainings");
+
                     b.Navigation("Sessions");
                 });
 
             modelBuilder.Entity("SportCentrum.Models.Training", b =>
                 {
+                    b.Navigation("CoachTrainings");
+
                     b.Navigation("Sessions");
 
                     b.Navigation("UserTrainings");

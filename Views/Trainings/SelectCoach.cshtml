@@ -1,0 +1,32 @@
+﻿@model List<Coach>
+@{
+    var sport = ViewBag.Sport as string;
+    var type = ViewBag.Type as string;
+}
+
+<div class="d-flex flex-column align-items-center text-center min-vh-100 px-4 gap-5 min-vh-100">
+    <h2 class="margin-t mb-4">Coaches</h2>
+    <div class="d-flex justify-content-center flex-wrap gap-5 w-100 mb-5">
+        <a class="btn border-dark border-1 w-25" asp-controller="Trainings" asp-action="SelectDate" asp-route-sport=@sport asp-route-trainerId="0" asp-route-type=@type>
+            <figure class="d-flex flex-column align-items-center h-100">
+                <img class="avatar-h"src="~/images/no-user.svg" alt="Coach" />
+                <figcaption class="mt-2 fw-bold">
+                    Without coach
+                </figcaption>
+            </figure>
+        </a>
+
+        @foreach(var coach in Model)
+        {
+            var imageSrc = Url.Content(coach.Gender == "F" ? "~/images/female-user.svg" : "~/images/male-user.svg");
+            <a class="btn border-dark border-1 w-25" asp-controller="Trainings" asp-action="SelectDate" asp-route-sport=@sport asp-route-trainerId=@coach.Id asp-route-type=@type>
+                <figure class="d-flex flex-column align-items-center">
+                    <img class="avatar-h" src=@imageSrc alt="Coach"/>
+                    <figcaption class="mt-2 fw-bold">
+                        @coach.Name @coach.Surname
+                    </figcaption>
+                </figure>
+            </a>
+        }
+    </div>
+</div>

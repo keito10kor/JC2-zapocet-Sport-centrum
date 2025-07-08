@@ -25,6 +25,18 @@ body {
     border-color: darkturquoise;
 }
 
+.margin-t {
+    margin-top: 6rem;
+}
+
+.avatar-h {
+    height: 14em;
+}
+
+.w-30 {
+    width: 30%;
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;

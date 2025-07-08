@@ -12,6 +12,7 @@ namespace SportCentrum.Models
         public string Gender { get; set; }
         public string Specialty { get; set; }
         public virtual ICollection<TrainingSession> Sessions { get; set; }
+        public virtual ICollection<CoachTraining> CoachTrainings { get; set; }
         
     }
 }

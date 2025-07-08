@@ -12,5 +12,6 @@ namespace SportCentrum.Models
         public TimeSpan? DurationWithCoach { get; set; }
         public virtual ICollection<TrainingSession> Sessions { get; set; }
         public virtual ICollection<UserTraining> UserTrainings { get; set; }
+        public virtual ICollection<CoachTraining> CoachTrainings { get; set; }
     }
 }
