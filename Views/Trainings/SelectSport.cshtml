@@ -9,6 +9,6 @@
     @foreach(var sport in Model)
     {
         var action = type == "group" ? "SelectDate" : "SelectCoach";
-        <a class="btn btn-lg color-main color-white w-50" asp-controller="Trainings" asp-action=@action asp-route-type=@type asp-route-sport=@sport>@sport</a>
+        <a class="btn btn-lg color-main color-white w-50" asp-controller="Trainings" asp-action="@(action)" asp-route-type="@type" asp-route-sport="@sport">@sport</a>
     }
 </div>

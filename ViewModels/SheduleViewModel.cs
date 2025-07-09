@@ -3,6 +3,7 @@
     public class SheduleViewModel
     {
         public string TrainingType { get; set; }
+        public int? CoachId { get; set; }
         public List<DayShedule> Days { get; set; }
     }
 

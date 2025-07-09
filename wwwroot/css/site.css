@@ -25,6 +25,10 @@ body {
     border-color: darkturquoise;
 }
 
+.text-color-main {
+    color: darkturquoise;
+}
+
 .margin-t {
     margin-top: 6rem;
 }
