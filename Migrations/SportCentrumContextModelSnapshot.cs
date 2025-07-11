@@ -186,21 +186,6 @@ namespace Sport_centrum.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("SportCentrum.Models.UserTraining", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("TrainingId")
-                        .HasColumnType("text");
-
-                    b.HasKey("UserId", "TrainingId");
-
-                    b.HasIndex("TrainingId");
-
-                    b.ToTable("UserTrainings");
-                });
-
             modelBuilder.Entity("SportCentrum.Models.CoachTraining", b =>
                 {
                     b.HasOne("SportCentrum.Models.Coach", "Coach")
@@ -256,25 +241,6 @@ namespace Sport_centrum.Migrations
                     b.Navigation("Training");
                 });
 
-            modelBuilder.Entity("SportCentrum.Models.UserTraining", b =>
-                {
-                    b.HasOne("SportCentrum.Models.Training", "Training")
-                        .WithMany("UserTrainings")
-                        .HasForeignKey("TrainingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SportCentrum.Models.User", "User")
-                        .WithMany("UserTrainings")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Training");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("SportCentrum.Models.Coach", b =>
                 {
                     b.Navigation("CoachTrainings");
@@ -287,8 +253,6 @@ namespace Sport_centrum.Migrations
                     b.Navigation("CoachTrainings");
 
                     b.Navigation("Sessions");
-
-                    b.Navigation("UserTrainings");
                 });
 
             modelBuilder.Entity("SportCentrum.Models.TrainingSession", b =>
@@ -299,8 +263,6 @@ namespace Sport_centrum.Migrations
             modelBuilder.Entity("SportCentrum.Models.User", b =>
                 {
                     b.Navigation("Reservations");
-
-                    b.Navigation("UserTrainings");
                 });
 #pragma warning restore 612, 618
         }

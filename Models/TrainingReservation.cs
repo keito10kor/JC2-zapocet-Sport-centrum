@@ -11,6 +11,5 @@ namespace SportCentrum.Models
         public string TrainingSessionId { get; set; }
         public virtual TrainingSession TrainingSession { get; set; }
         public DateTime ReservationTime { get; set; }
-
     }
 }

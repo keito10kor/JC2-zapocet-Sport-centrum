@@ -11,7 +11,5 @@ namespace SportCentrum.Models
         public string Email { get; set; }
         public string Gender { get; set; }
         public virtual ICollection<TrainingReservation> Reservations { get; set; }
-        public virtual ICollection<UserTraining> UserTrainings { get; set; }
-
     }
 }

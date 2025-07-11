@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Sport_centrum;
 using SportCentrum.Configuration;
 using SportCentrum.Context;
 using System;
@@ -16,7 +17,22 @@ var app = builder.Build();
 using(var scope  = app.Services.CreateScope())
 {
     var context =scope.ServiceProvider.GetService<SportCentrumContext>();
-    DbSeeder.Seed(context, "Data/data.xml");
+    try
+    {
+        DbInitializer.ClearOldReservations(context);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+    }
+    try
+    {
+        DbSeeder.Seed(context, "Data/data.xml");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex);
+    }
 }
 
 // Configure the HTTP request pipeline.

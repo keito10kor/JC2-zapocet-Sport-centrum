@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
 using SportCentrum.Context;
 using SportCentrum.Models;
 using SportCentrum.ViewModels;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using static System.Reflection.Metadata.BlobBuilder;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SportСentrum.Controllers
 {
@@ -26,15 +30,6 @@ namespace SportСentrum.Controllers
         {
             ViewBag.Type = type;
             bool isGroup = type == "group";
-            /*IQueryable<Training> query = _context.Trainings;
-            if(type == "individual")
-            {
-                query = query.Where(t => t.DurationWithCoach != null || t.DurationWithoutCoach != null);
-            }
-            if(type == "group")
-            {
-                query = query.Where(t => t.Duration != null);
-            }*/
 
             var sportNames = _context.Sessions.Where(s => s.IsGroup == isGroup).Include(s => s.Training).Select(s => s.Training.Name).Distinct().ToList();
             return View(sportNames);
@@ -47,7 +42,7 @@ namespace SportСentrum.Controllers
             var training = _context.Trainings.FirstOrDefault(t => t.Name == sport);
             if(training == null)
             {
-                return NotFound();
+                return BadRequest("Training is not found");
             }
             var coaches = _context.CoachTrainings.Where(ct => ct.TrainingId == training.Id).Select(ct => ct.Coach).Distinct().ToList();
             return View(coaches);
@@ -61,101 +56,82 @@ namespace SportСentrum.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Sport = sport;
             var isGroup = coachId == null;
+            var now = DateTime.UtcNow;
+            var days = new List<DayShedule>();
             if (isGroup)
             {
                 var sessions = _context.Sessions.Include(s => s.Coach).Include(s => s.Training).Where(s => s.Training.Id == training.Id && s.IsGroup == isGroup);
-                var groupedDays = sessions.GroupBy(s => s.Start.Date).Select(g => new DayShedule
+                days = sessions.GroupBy(s => s.Start.Date).Select(g => new DayShedule
                 {
                     Date = g.Key,
-                    TimeSlots = g.Select(ts => new TimeSlot
+                    TimeSlots = g.OrderBy(ts => ts.Start.TimeOfDay).Select(ts => new TimeSlot
                     {
                         Time = ts.Start.TimeOfDay,
                         CoachName = isGroup ? $"{ts.Coach.Name} {ts.Coach.Surname}" : null,
-                        Capacity = isGroup ? ts.Capacity : null
+                        Capacity = isGroup ? ts.Capacity : null,
+                        SessionId = ts.Id
                     }).ToList()
                 })
                 .OrderBy(d => d.Date).ToList();
-
-                var model = new SheduleViewModel
+            }
+            else if (coachId > 0)
+            {
+                var duration = training.DurationWithCoach;
+                if(duration == null)
                 {
-                    TrainingType = "group",
-                    Days = groupedDays,
-                    CoachId = null
-                };
+                    return BadRequest("Training duration is not set");
+                }
+                var busy = _context.Sessions.Where(s => s.CoachId == coachId).ToList();
 
-                return View(model);
+                for (int i = 0; i < 7; i++)
+                {
+                    var date = now.Date.AddDays(i);
+                    var slots = new List<TimeSlot>();
+
+                    var busySlots = busy.Where(s => s.Start.Date == date).Select(s => ( Start: s.Start.TimeOfDay, End: s.End.TimeOfDay)).ToList();
+                    for (var time = TimeSpan.FromHours(8); time + duration <= TimeSpan.FromHours(20); time += duration.Value)
+                    {
+                        bool conflict = busySlots.Any(b => time < b.End && (time + duration) > b.Start);
+                        if (!conflict)
+                        {
+                            slots.Add(new TimeSlot { Time = time });
+                        }
+                    }
+                    if (slots.Any())
+                    {
+                        days.Add(new DayShedule { Date = date, TimeSlots = slots });
+                    }
+                }
             }
             else
             {
-                var duration = coachId > 0 ? training.DurationWithCoach : training.DurationWithoutCoach;
-                if(duration == null)
+                var duration = training.DurationWithoutCoach;
+                if (duration == null)
                 {
-                    return BadRequest("Duration not defined");
+                    return BadRequest("Training duration is not set");
                 }
-
-                int startHour = 8;
-                int endHour = 20;
-                var now = DateTime.UtcNow;
-                var days = new List<DayShedule>();
-
-                List<TrainingSession> busySessions = new();
-                if (coachId > 0)
-                {
-                    busySessions = _context.Sessions.Where(s => s.CoachId == coachId).ToList();
-                }
-                var sessionsByDayOfWeek = busySessions.GroupBy(s => s.Start.DayOfWeek).ToDictionary(
-                    g => g.Key,
-                    g => g.ToList());
-
+                var sessions = _context.Sessions.Where(s => s.TrainingId == training.Id && !s.IsGroup && s.CoachId == null).ToList();
                 for(int i = 0; i < 7; i++)
                 {
                     var date = now.AddDays(i);
-                    var dayOfWeek = date.DayOfWeek;
-                    sessionsByDayOfWeek.TryGetValue(dayOfWeek, out var sessionsForDay);
-                    var busySlots = sessionsForDay?.Select(s => new { Start = s.Start.TimeOfDay, End = s.End.TimeOfDay }).ToList();
-                    var timeSlots = new List<TimeSlot>();
-                    for(var time = TimeSpan.FromHours(startHour); (time + duration) <= TimeSpan.FromHours(endHour); time += duration.Value)
+                    var slots = new List<TimeSlot>();
+                    var day = date.DayOfWeek;
+                    slots = sessions.Where(s => s.DayOfWeek == day.ToString()).OrderBy(s => s.Start.TimeOfDay).Select(s => new TimeSlot { Time = s.Start.TimeOfDay, Capacity = s.Capacity, SessionId = s. Id }).ToList();
+                    if (slots.Any())
                     {
-                        bool isBusy = false;
-                        if(busySlots != null)
-                        {
-                            foreach(var busy in busySlots)
-                            {
-                                if(time < busy.End && (time + duration) > busy.Start)
-                                {
-                                    isBusy = true;
-                                    break;
-                                }
-                            }
-                        }
-                        if(!isBusy)
-                        {
-                            timeSlots.Add(new TimeSlot
-                            {
-                                Time = time,
-                                CoachName = null,
-                                Capacity = 0
-                            });
-                        }
-                    }
-                    if(timeSlots.Any())
-                    {
-                        days.Add(new DayShedule
-                        {
-                            Date = date,
-                            TimeSlots = timeSlots
-                        });
+                        days.Add(new DayShedule { Date = date, TimeSlots = slots });
                     }
                 }
-                var model = new SheduleViewModel
-                {
-                    TrainingType = "individual",
-                    Days = days,
-                    CoachId = coachId
-                };
-                return View(model);
             }
+
+            return View(new SheduleViewModel
+            {
+                TrainingType = isGroup ? "group" : "individual",
+                Days = days,
+                CoachId = coachId
+            });
         }
     }
 }

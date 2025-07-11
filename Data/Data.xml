@@ -352,7 +352,52 @@
 			<Session>
 				<TrainingId>GYM</TrainingId>
 				<TrainingType>Individual</TrainingType>
-				<StartTime>09:00:00</StartTime>
+				<StartTime>08:00:00</StartTime>
+				<Capacity>45</Capacity>
+				<DaysOfWeek>
+					<Day>Monday</Day>
+					<Day>Tuesday</Day>
+					<Day>Wednesday</Day>
+					<Day>Thursday</Day>
+					<Day>Friday</Day>
+					<Day>Saturday</Day>
+					<Day>Sunday</Day>
+				</DaysOfWeek>
+			</Session>
+			<Session>
+				<TrainingId>GYM</TrainingId>
+				<TrainingType>Individual</TrainingType>
+				<StartTime>11:00:00</StartTime>
+				<Capacity>45</Capacity>
+				<DaysOfWeek>
+					<Day>Monday</Day>
+					<Day>Tuesday</Day>
+					<Day>Wednesday</Day>
+					<Day>Thursday</Day>
+					<Day>Friday</Day>
+					<Day>Saturday</Day>
+					<Day>Sunday</Day>
+				</DaysOfWeek>
+			</Session>
+			<Session>
+				<TrainingId>GYM</TrainingId>
+				<TrainingType>Individual</TrainingType>
+				<StartTime>14:00:00</StartTime>
+				<Capacity>45</Capacity>
+				<DaysOfWeek>
+					<Day>Monday</Day>
+					<Day>Tuesday</Day>
+					<Day>Wednesday</Day>
+					<Day>Thursday</Day>
+					<Day>Friday</Day>
+					<Day>Saturday</Day>
+					<Day>Sunday</Day>
+				</DaysOfWeek>
+			</Session>
+			<Session>
+				<TrainingId>GYM</TrainingId>
+				<TrainingType>Individual</TrainingType>
+				<StartTime>17:00:00</StartTime>
 				<Capacity>45</Capacity>
 				<DaysOfWeek>
 					<Day>Monday</Day>
@@ -367,7 +412,52 @@
 			<Session>
 				<TrainingId>SWI</TrainingId>
 				<TrainingType>Individual</TrainingType>
-				<StartTime>09:00:00</StartTime>
+				<StartTime>08:00:00</StartTime>
+				<Capacity>20</Capacity>
+				<DaysOfWeek>
+					<Day>Monday</Day>
+					<Day>Tuesday</Day>
+					<Day>Wednesday</Day>
+					<Day>Thursday</Day>
+					<Day>Friday</Day>
+					<Day>Saturday</Day>
+					<Day>Sunday</Day>
+				</DaysOfWeek>
+			</Session>
+			<Session>
+				<TrainingId>SWI</TrainingId>
+				<TrainingType>Individual</TrainingType>
+				<StartTime>11:00:00</StartTime>
+				<Capacity>20</Capacity>
+				<DaysOfWeek>
+					<Day>Monday</Day>
+					<Day>Tuesday</Day>
+					<Day>Wednesday</Day>
+					<Day>Thursday</Day>
+					<Day>Friday</Day>
+					<Day>Saturday</Day>
+					<Day>Sunday</Day>
+				</DaysOfWeek>
+			</Session>
+			<Session>
+				<TrainingId>SWI</TrainingId>
+				<TrainingType>Individual</TrainingType>
+				<StartTime>14:00:00</StartTime>
+				<Capacity>20</Capacity>
+				<DaysOfWeek>
+					<Day>Monday</Day>
+					<Day>Tuesday</Day>
+					<Day>Wednesday</Day>
+					<Day>Thursday</Day>
+					<Day>Friday</Day>
+					<Day>Saturday</Day>
+					<Day>Sunday</Day>
+				</DaysOfWeek>
+			</Session>
+			<Session>
+				<TrainingId>SWI</TrainingId>
+				<TrainingType>Individual</TrainingType>
+				<StartTime>17:00:00</StartTime>
 				<Capacity>20</Capacity>
 				<DaysOfWeek>
 					<Day>Monday</Day>

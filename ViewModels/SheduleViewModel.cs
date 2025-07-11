@@ -18,5 +18,6 @@
         public TimeSpan Time { get; set; }
         public string? CoachName { get; set; }
         public int? Capacity { get; set; }
+        public string? SessionId { get; set; }
     }
 }

@@ -114,30 +114,6 @@ namespace Sport_centrum.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserTrainings",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    TrainingId = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserTrainings", x => new { x.UserId, x.TrainingId });
-                    table.ForeignKey(
-                        name: "FK_UserTrainings_Trainings_TrainingId",
-                        column: x => x.TrainingId,
-                        principalTable: "Trainings",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserTrainings_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Reservations",
                 columns: table => new
                 {
@@ -188,11 +164,6 @@ namespace Sport_centrum.Migrations
                 name: "IX_Sessions_TrainingId",
                 table: "Sessions",
                 column: "TrainingId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserTrainings_TrainingId",
-                table: "UserTrainings",
-                column: "TrainingId");
         }
 
         /// <inheritdoc />
@@ -203,9 +174,6 @@ namespace Sport_centrum.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reservations");
-
-            migrationBuilder.DropTable(
-                name: "UserTrainings");
 
             migrationBuilder.DropTable(
                 name: "Sessions");

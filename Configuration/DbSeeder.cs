@@ -7,6 +7,7 @@ using SportCentrum.Models;
 using SportCentrum.DtoModels;
 using SportCentrum.Context;
 using System.Xml;
+using System.Reflection.Metadata.Ecma335;
 
 namespace SportCentrum.Configuration
 {
@@ -29,21 +30,17 @@ namespace SportCentrum.Configuration
             }
         }
 
-        private static DateTime GetNextWeekday(DateTime start, DayOfWeek day)
+        /*private static DateTime GetNextWeekday(DateTime start, DayOfWeek day)
         {
             return start.AddDays(((int)day - (int)start.DayOfWeek + 7) % 7);
-        }
-
-        private static string GenerateIndividualTrainingId (string trainingId, DayOfWeek day, TimeSpan time)
-        {
-            string[] dayShortNames = { "MO", "TU", "WE", "TH", "FR", "SA", "SU" };
-            string dayShort = dayShortNames[(int)day];
-            string timeStr = time.ToString(@"hhmm");
-            return $"{trainingId}{dayShort}{timeStr}";
-        }
+        }*/
         
         private static List<TrainingSession> GetAllSessions(AllSessionsDto allSessions, List<Training> trainingsList)
         {
+            Console.WriteLine($"Group null? {allSessions.Group == null}");
+            Console.WriteLine($"Tennis count: {allSessions.Group?.TennisSessions?.Count}");
+            Console.WriteLine($"Individual null? {allSessions.Individual == null}");
+            Console.WriteLine($"Individual count: {allSessions.Individual?.Sessions?.Count}");
             var sessions = new List<ISessionDto>();
             sessions.AddRange(allSessions.Group.TennisSessions);
             sessions.AddRange(allSessions.Group.PilatesSessions);
@@ -69,26 +66,29 @@ namespace SportCentrum.Configuration
                 {
                     continue;
                 }
-                var duration = training.Duration ?? training.DurationWithCoach ?? training.DurationWithoutCoach ?? TimeSpan.Zero;
-
+                var duration = training.Duration ?? training.DurationWithoutCoach ?? TimeSpan.Zero;
+                var monday = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek + (int)DayOfWeek.Monday);
                 foreach (var dayStr in session.Days)
                 {
+                    Console.WriteLine($"Creating individual session: {session.TrainingId} at {session.StartTime} on {dayStr}");
                     if (!Enum.TryParse<DayOfWeek>(dayStr, true, out var dayOfWeek))
                     {
                         continue;
                     }
-                    var startLocal = GetNextWeekday(DateTime.Today, dayOfWeek).Add(startTime);
+                    var startLocal = monday.AddDays((int)dayOfWeek - 1).Add(startTime);
                     var start = DateTime.SpecifyKind(startLocal, DateTimeKind.Utc);
                     var isGroup = session.IsGroup;
-                    string id;
-                    if (isGroup)
+                    if(!isGroup && session.CoachId == null)
                     {
-                        id = session.Id;
+                        bool exists = result.Any(s => !s.IsGroup && s.CoachId == null && s.TrainingId == session.TrainingId && s.DayOfWeek == dayOfWeek.ToString() && s.Start.TimeOfDay == start.TimeOfDay);
+                        if(exists)
+                        {
+                            continue;
+                        }
                     }
-                    else
-                    {
-                        id = GenerateIndividualTrainingId(session.TrainingId, dayOfWeek, startTime);
-                    }
+                    string id = isGroup ? session.Id : SessionIdGenerator.Generate(session.TrainingId, dayOfWeek, startTime);
+
+
                     result.Add(new TrainingSession
                     {
                         Id = id,
@@ -107,8 +107,6 @@ namespace SportCentrum.Configuration
         }
         public static void Seed(SportCentrumContext context, string xmlPath)
         {
-            /*if (/!context.Sessions.Any())
-            {*/
             DataDto data;
             try
             {
@@ -203,7 +201,7 @@ namespace SportCentrum.Configuration
                 var filteredSessions = sessionsList.Where(s => s.CoachId == null || existingCoachIds.Contains((int)s.CoachId));
                 foreach(var session in filteredSessions)
                 {
-                    if(!context.Sessions.Any(s => s.Id == session.Id))
+                    if(!context.Sessions.Any())
                     {
                         context.Sessions.Add(session);
                     }
