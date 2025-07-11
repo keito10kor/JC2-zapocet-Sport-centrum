@@ -17,22 +17,11 @@ var app = builder.Build();
 using(var scope  = app.Services.CreateScope())
 {
     var context =scope.ServiceProvider.GetService<SportCentrumContext>();
-    try
-    {
-        DbInitializer.ClearOldReservations(context);
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine(ex);
-    }
-    try
-    {
-        DbSeeder.Seed(context, "Data/data.xml");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine(ex);
-    }
+    
+    //Muzete pouzit tuto metodu pro cisteni tabulky rezervaci
+    //DbInitializer.ClearOldReservations(context);
+    DbSeeder.Seed(context, "Data/data.xml");
+    
 }
 
 // Configure the HTTP request pipeline.

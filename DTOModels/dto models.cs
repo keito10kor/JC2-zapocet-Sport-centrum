@@ -144,7 +144,7 @@ namespace SportCentrum.DtoModels
         public bool IsGroup { get; set; } = false;
         [XmlArray("DaysOfWeek")]
         [XmlArrayItem("Day")]
-        public List<string> DaysOfWeek { get; set; }
+        public required List<string> DaysOfWeek { get; set; }
         public IEnumerable<string> Days => DaysOfWeek;
     }
 
@@ -166,6 +166,6 @@ namespace SportCentrum.DtoModels
     public class CoachTrainingDto
     {
         public int CoachId { get; set; }
-        public string TrainingId { get; set; }
+        public required string TrainingId { get; set; }
     }
 }

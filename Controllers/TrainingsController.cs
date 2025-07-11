@@ -50,7 +50,6 @@ namespace SportСentrum.Controllers
 
         public IActionResult SelectDate(string sport, int? coachId)
         {
-            Console.WriteLine($"Sport: {sport}");
             var training = _context.Trainings.FirstOrDefault(t => t.Name == sport);
             if(training == null)
             {
@@ -66,7 +65,7 @@ namespace SportСentrum.Controllers
                 days = sessions.GroupBy(s => s.Start.Date).Select(g => new DayShedule
                 {
                     Date = g.Key,
-                    TimeSlots = g.OrderBy(ts => ts.Start.TimeOfDay).Select(ts => new TimeSlot
+                    TimeSlots = g.Select(ts => new TimeSlot
                     {
                         Time = ts.Start.TimeOfDay,
                         CoachName = isGroup ? $"{ts.Coach.Name} {ts.Coach.Surname}" : null,
@@ -83,14 +82,15 @@ namespace SportСentrum.Controllers
                 {
                     return BadRequest("Training duration is not set");
                 }
+                
                 var busy = _context.Sessions.Where(s => s.CoachId == coachId).ToList();
 
                 for (int i = 0; i < 7; i++)
                 {
-                    var date = now.Date.AddDays(i);
+                    var date = now.AddDays(i);
                     var slots = new List<TimeSlot>();
 
-                    var busySlots = busy.Where(s => s.Start.Date == date).Select(s => ( Start: s.Start.TimeOfDay, End: s.End.TimeOfDay)).ToList();
+                    var busySlots = busy.Where(s => s.Start.Date == date.Date).Select(s => new { Start= s.Start.TimeOfDay, End= s.End.TimeOfDay }).ToList();
                     for (var time = TimeSpan.FromHours(8); time + duration <= TimeSpan.FromHours(20); time += duration.Value)
                     {
                         bool conflict = busySlots.Any(b => time < b.End && (time + duration) > b.Start);
@@ -115,7 +115,7 @@ namespace SportСentrum.Controllers
                 var sessions = _context.Sessions.Where(s => s.TrainingId == training.Id && !s.IsGroup && s.CoachId == null).ToList();
                 for(int i = 0; i < 7; i++)
                 {
-                    var date = now.AddDays(i);
+                    var date = DateTime.SpecifyKind(now.AddDays(i), DateTimeKind.Utc);
                     var slots = new List<TimeSlot>();
                     var day = date.DayOfWeek;
                     slots = sessions.Where(s => s.DayOfWeek == day.ToString()).OrderBy(s => s.Start.TimeOfDay).Select(s => new TimeSlot { Time = s.Start.TimeOfDay, Capacity = s.Capacity, SessionId = s. Id }).ToList();
