@@ -15,7 +15,7 @@ namespace SportCentrum
     public class BackupService : BackgroundService
     {
         private readonly IServiceProvider _serviceProvider;
-        private readonly TimeSpan _interval = TimeSpan.FromSeconds(60);
+        private readonly TimeSpan _interval = TimeSpan.FromHours(24);
 
         public BackupService(IServiceProvider serviceProvider)
         {
