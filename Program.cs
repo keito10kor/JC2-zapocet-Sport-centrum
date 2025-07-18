@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Sport_centrum;
+using SportCentrum;
 using SportCentrum.Configuration;
 using SportCentrum.Context;
 using System;
@@ -11,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<SportCentrumContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("Connection")));
+builder.Services.AddHostedService<BackupService>();
 
 var app = builder.Build();
 
